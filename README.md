@@ -1,2 +1,2 @@
-# advertising-date-etlv
+# advertising-data-etlv
 Advertising Data ETL-V Challenge
