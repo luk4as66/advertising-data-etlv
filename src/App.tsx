@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { getData } from "./utils/dataUtils";
+import { fetchData } from "./utils/dataUtils";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { ADVERTISING_DATA_URL } from "./consts";
 
 function App() {
   useEffect(() => {
-    getData();
+    fetchData(ADVERTISING_DATA_URL);
   }, []);
 
   return (

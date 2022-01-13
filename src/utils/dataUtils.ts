@@ -1,24 +1,32 @@
 import Papa from "papaparse";
-import { DATA_URL } from "../consts";
 
-export const getData = async () => {
+// TODO: Improve validation
+const isValidUrl = (url: string) => {
   try {
-    const response = await fetch(DATA_URL);
-    if (response.status === 200) {
-      const data = await response.text();
-      // TODO: try to use with worker
-      Papa.parse(data, {
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: "greedy",
-        step: (results) => {
-          console.log("Results", results);
-        },
-      });
-    } else {
-      throw Error(String(response.status));
-    }
+    // eslint-disable-next-line no-new
+    new URL(url);
   } catch (error) {
-    console.log("Error", error);
+    return false;
+  }
+  return true;
+};
+
+export const fetchData = (url: string) => {
+  if (isValidUrl(url)) {
+    Papa.parse(url, {
+      download: true,
+      header: true,
+      dynamicTyping: true,
+      skipEmptyLines: "greedy",
+      error: (error) => {
+        console.log("Error", error);
+      },
+      step: (results) => {
+        console.log("Step", results);
+      },
+      complete: (results) => {
+        console.log("Complete", results);
+      },
+    });
   }
 };
