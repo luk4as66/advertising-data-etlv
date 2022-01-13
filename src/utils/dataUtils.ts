@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import { DATA_URL } from "./consts";
+import { DATA_URL } from "../consts";
 
 export const getData = async () => {
   try {

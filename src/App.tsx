@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { getData } from "./utils";
+import { getData } from "./utils/dataUtils";
 import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
