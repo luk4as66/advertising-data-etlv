@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import FilterForm from "../FilterForm/FilterForm";
-import Graph from "../Graph/Graph";
+import FilterForm from "../filterForm/filterForm";
+import Graph from "../graph/graph";
 
 function Dashboard(): React.ReactElement {
   return (
