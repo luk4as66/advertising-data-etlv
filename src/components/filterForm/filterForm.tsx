@@ -25,10 +25,10 @@ function FilterForm(): React.ReactElement {
 
   return (
     <div>
-      <Typography variant="h5" component="h5" gutterBottom>
+      <Typography variant="h5" component="h5" p={1}>
         Filter dimension values
       </Typography>
-      <Stack spacing={2}>
+      <Stack spacing={2} p={1}>
         <MultipleSelect
           label="Datasource"
           selectData={selectData}

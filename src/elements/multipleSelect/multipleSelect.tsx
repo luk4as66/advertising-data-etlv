@@ -43,7 +43,7 @@ function MultipleSelect({
   };
 
   return (
-    <FormControl>
+    <FormControl fullWidth>
       <InputLabel id="select-label">{label}</InputLabel>
       <Select
         labelId="select-label"
