@@ -3,10 +3,12 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { Button } from "@mui/material";
 import MultipleSelect from "../../elements/multipleSelect/multipleSelect";
+import { FilterFormType } from "./types";
 
-function FilterForm(): React.ReactElement {
-  const selectData = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-
+function FilterForm({
+  campaignsNames,
+  dataSources,
+}: FilterFormType): React.ReactElement {
   const [selectedDataSources, setSelectedDataSources] = useState<
     ReadonlyArray<string>
   >([]);
@@ -31,13 +33,13 @@ function FilterForm(): React.ReactElement {
       <Stack spacing={2} p={1}>
         <MultipleSelect
           label="Datasource"
-          selectData={selectData}
+          selectData={dataSources}
           selectedValue={selectedDataSources}
           onSelectionChange={handleDataSourceChange}
         />
         <MultipleSelect
           label="Campaigns"
-          selectData={selectData}
+          selectData={campaignsNames}
           selectedValue={selectedCampaigns}
           onSelectionChange={handleCampaignsChange}
         />

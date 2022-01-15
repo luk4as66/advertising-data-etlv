@@ -1,4 +1,5 @@
 import Papa from "papaparse";
+import { CampaignByDatasource, CampaignRaw } from "./dataTypes";
 
 // TODO: Improve validation
 const isValidUrl = (url: string) => {
@@ -11,9 +12,15 @@ const isValidUrl = (url: string) => {
   return true;
 };
 
-export const fetchData = (url: string) => {
+export const fetchData = (
+  url: string,
+  // eslint-disable-next-line no-unused-vars
+  onComplete: (data: CampaignByDatasource) => void
+) => {
   if (isValidUrl(url)) {
-    Papa.parse(url, {
+    const data: CampaignByDatasource = {};
+
+    Papa.parse<CampaignRaw>(url, {
       download: true,
       header: true,
       dynamicTyping: true,
@@ -22,10 +29,28 @@ export const fetchData = (url: string) => {
         console.log("Error", error);
       },
       step: (results) => {
-        console.log("Step", results);
+        const dataSource = results.data.Datasource;
+        const campaign = results.data.Campaign;
+
+        const coreData = {
+          Date: results.data.Date,
+          Clicks: results.data.Clicks,
+          Impressions: results.data.Impressions,
+        };
+
+        if (data[dataSource]) {
+          if (data[dataSource][campaign]) {
+            data[dataSource][campaign].push(coreData);
+          } else {
+            data[dataSource][campaign] = [coreData];
+          }
+        } else {
+          data[dataSource] = {};
+          data[dataSource][campaign] = [coreData];
+        }
       },
-      complete: (results) => {
-        console.log("Complete", results);
+      complete: () => {
+        onComplete(data);
       },
     });
   }
