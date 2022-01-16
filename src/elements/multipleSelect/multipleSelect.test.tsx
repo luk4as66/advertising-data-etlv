@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import MultipleSelect from "./multipleSelect";
 
 const selectData = ["One", "Two", "Tree"];
@@ -88,6 +88,22 @@ describe("MultipleSelect", () => {
     fireEvent.mouseDown(screen.getByRole("button"));
     await screen.getByRole("listbox");
     fireEvent.click(screen.getByText("Clear selection"));
+
+    expect(onSelectionChangeMock).toBeCalledWith([]);
+  });
+  test("should deselect", async () => {
+    render(
+      <MultipleSelect
+        onSelectionChange={onSelectionChangeMock}
+        selectData={selectData}
+        label="Multiple Select"
+        selectedValue={selectedValue}
+      />
+    );
+    fireEvent.mouseDown(screen.getByRole("button"));
+    await screen.getByRole("listbox");
+    const dropdown = within(screen.getByRole("listbox"));
+    fireEvent.click(dropdown.getByText("One"));
 
     expect(onSelectionChangeMock).toBeCalledWith([]);
   });

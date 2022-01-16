@@ -12,7 +12,7 @@ function SelectAllRenderer({
         <ListItemText
           onClick={() => onAllSelectChange(!isAllSelected)}
           style={{ width: 200 }}
-          primary={isAllSelected ? "Clear" : "All"}
+          primary={isAllSelected ? "Clear selection" : "All"}
           primaryTypographyProps={{ noWrap: true }}
         />
       </ListItemButton>
