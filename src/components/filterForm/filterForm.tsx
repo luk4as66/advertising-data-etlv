@@ -11,6 +11,7 @@ function FilterForm({
   campaignsNames,
   dataSources,
   data,
+  onApply,
 }: FilterFormType): React.ReactElement {
   const [selectedDataSources, setSelectedDataSources] = useState<
     ReadonlyArray<string>
@@ -55,6 +56,10 @@ function FilterForm({
     setSelectedCampaigns(selection);
   };
 
+  const handleOnApply = () => {
+    onApply(selectedDataSources, selectedCampaigns);
+  };
+
   return (
     <Box width="inherit">
       <Typography variant="h5" component="h5" p={1}>
@@ -77,7 +82,9 @@ function FilterForm({
           selectedValue={selectedCampaigns}
           onSelectionChange={handleCampaignsChange}
         />
-        <Button variant="contained">Apply</Button>
+        <Button variant="contained" onClick={handleOnApply}>
+          Apply
+        </Button>
       </Stack>
     </Box>
   );
