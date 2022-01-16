@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { FormControl, InputLabel, Select } from "@mui/material";
+import { FixedSizeList as List } from "react-window";
+import _ from "lodash";
 import { MultipleSelectType } from "./types";
-import { allSelected, clearSelected } from "./utils";
+import { allSelected } from "./utils";
 import SelectedValuesRenderer from "./selectedValuesRenderer";
+import ListItemRenderer from "./listItemRenderer";
+import SelectAllRenderer from "./selectAllRenderer";
 
 function MultipleSelect({
   label,
@@ -20,26 +18,23 @@ function MultipleSelect({
     allSelected(selectedValue, selectData)
   );
 
-  const handleSelectChange = (
-    evt: SelectChangeEvent<ReadonlyArray<string>>
-  ): void => {
-    const {
-      target: { value },
-    } = evt;
-
-    const selectionArray: ReadonlyArray<string> =
-      typeof value === "string" ? value.split(",") : value;
-
-    if (allSelected(selectionArray, selectData)) {
-      onSelectionChange(selectData);
-      setIsAllSelected(true);
-    } else if (clearSelected(selectionArray)) {
-      onSelectionChange([]);
-      setIsAllSelected(false);
+  const onRowClick = (rowText: string, isSelected: boolean): void => {
+    let selection: ReadonlyArray<string>;
+    if (isSelected) {
+      selection = _.filter(selectedValue, (item) => item !== rowText);
     } else {
-      onSelectionChange(selectionArray);
-      setIsAllSelected(false);
+      selection = [...selectedValue, rowText];
     }
+    onSelectionChange(selection);
+  };
+
+  const handleOnAllSelectChange = (isAll: boolean) => {
+    if (isAll) {
+      onSelectionChange(selectData);
+    } else {
+      onSelectionChange([]);
+    }
+    setIsAllSelected(isAll);
   };
 
   return (
@@ -48,7 +43,6 @@ function MultipleSelect({
       <Select
         labelId="select-label"
         multiple
-        onChange={handleSelectChange}
         value={selectedValue}
         renderValue={(selected) => (
           <SelectedValuesRenderer
@@ -57,20 +51,23 @@ function MultipleSelect({
           />
         )}
       >
-        {isAllSelected ? (
-          <MenuItem key="clear" value="clear">
-            Clear selection
-          </MenuItem>
-        ) : (
-          <MenuItem key="all" value="all">
-            All
-          </MenuItem>
-        )}
-        {selectData.map((value) => (
-          <MenuItem key={value} value={value}>
-            {value}
-          </MenuItem>
-        ))}
+        <SelectAllRenderer
+          isAllSelected={isAllSelected}
+          onAllSelectChange={handleOnAllSelectChange}
+        />
+        <List
+          height={200}
+          itemCount={selectData.length}
+          itemData={{
+            onRowClick,
+            items: selectData,
+            selected: selectedValue,
+          }}
+          itemSize={40}
+          width="100%"
+        >
+          {ListItemRenderer}
+        </List>
       </Select>
     </FormControl>
   );

@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import Grid from "@mui/material/Grid";
+import _ from "lodash";
 import FilterForm from "../filterForm/filterForm";
 import Graph from "../graph/graph";
 import { DashboardType } from "./types";
@@ -14,15 +15,16 @@ function Dashboard({ data }: DashboardType): React.ReactElement {
     dataSources.forEach((dataSource) => {
       campaigns.push(...Object.keys(data[dataSource]));
     });
-    return campaigns;
+
+    return _.uniq(campaigns);
   }, [data]);
 
   return (
     <Grid container spacing={2}>
-      <Grid item container justifyContent="flex-start" xs={5}>
+      <Grid item container justifyContent="flex-start" xs={4}>
         <FilterForm dataSources={dataSources} campaignsNames={campaignsNames} />
       </Grid>
-      <Grid item container justifyContent="flex-start" xs={7}>
+      <Grid item container justifyContent="flex-start" xs={8}>
         <Graph />
       </Grid>
     </Grid>

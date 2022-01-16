@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import MultipleSelect from "../../elements/multipleSelect/multipleSelect";
 import { FilterFormType } from "./types";
 
@@ -26,11 +26,11 @@ function FilterForm({
   };
 
   return (
-    <div>
+    <Box width="inherit">
       <Typography variant="h5" component="h5" p={1}>
         Filter dimension values
       </Typography>
-      <Stack spacing={2} p={1}>
+      <Stack spacing={2} p={2}>
         <MultipleSelect
           label="Datasource"
           selectData={dataSources}
@@ -45,7 +45,7 @@ function FilterForm({
         />
         <Button variant="contained">Apply</Button>
       </Stack>
-    </div>
+    </Box>
   );
 }
 
