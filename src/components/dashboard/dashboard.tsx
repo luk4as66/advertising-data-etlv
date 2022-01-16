@@ -22,7 +22,11 @@ function Dashboard({ data }: DashboardType): React.ReactElement {
   return (
     <Grid container spacing={2}>
       <Grid item container justifyContent="flex-start" xs={4}>
-        <FilterForm dataSources={dataSources} campaignsNames={campaignsNames} />
+        <FilterForm
+          dataSources={dataSources}
+          campaignsNames={campaignsNames}
+          data={data}
+        />
       </Grid>
       <Grid item container justifyContent="flex-start" xs={8}>
         <Graph />
