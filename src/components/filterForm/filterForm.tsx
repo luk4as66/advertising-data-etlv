@@ -24,8 +24,14 @@ function FilterForm({
   const availableCampaigns: ReadonlyArray<Campaign> = useMemo(() => {
     const campaigns: Array<Campaign> = [];
 
-    selectedDataSources.forEach((dataSource) => {
-      campaigns.push(...Object.keys(data[dataSource]));
+    data.forEach((item) => {
+      const isOnSelectedDataSources = _.find(
+        selectedDataSources,
+        (selectedDatasource) => selectedDatasource === item.Datasource
+      );
+      if (isOnSelectedDataSources) {
+        campaigns.push(item.Campaign);
+      }
     });
 
     return _.uniq(campaigns);
@@ -34,17 +40,17 @@ function FilterForm({
   const availableDatasources: ReadonlyArray<Datasource> = useMemo(() => {
     const sources: Array<Datasource> = [];
 
-    dataSources.forEach((dataSource) => {
-      const campaignsInDataSource = Object.keys(data[dataSource]);
-      const isCampaignInDataSource = _.find(campaignsInDataSource, (campaign) =>
-        _.includes(selectedCampaigns, campaign)
+    selectedCampaigns.forEach((campaign) => {
+      const datasource = _.find(
+        data,
+        (dataItem) => dataItem.Campaign === campaign
       );
-      if (isCampaignInDataSource) {
-        sources.push(dataSource);
+      if (datasource) {
+        sources.push(datasource.Datasource);
       }
     });
 
-    return sources;
+    return _.uniq(sources);
   }, [selectedCampaigns]);
 
   const handleDataSourceChange = (selection: ReadonlyArray<string>): void => {

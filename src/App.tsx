@@ -3,14 +3,13 @@ import "./App.css";
 import { fetchData } from "./utils/dataUtils";
 import Dashboard from "./components/dashboard/dashboard";
 import { ADVERTISING_DATA_URL } from "./consts";
-import { CampaignByDatasource } from "./utils/dataTypes";
+import { CampaignRaw } from "./utils/dataTypes";
 
 function App() {
-  const [dataByDataSource, setDataByDataSource] =
-    useState<CampaignByDatasource>({});
+  const [data, setData] = useState<ReadonlyArray<CampaignRaw>>([]);
 
-  const handleOnComplete = (data: CampaignByDatasource) => {
-    setDataByDataSource(data);
+  const handleOnComplete = (allData: ReadonlyArray<CampaignRaw>) => {
+    setData(allData);
   };
 
   useEffect(() => {
@@ -19,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <Dashboard data={dataByDataSource} />
+      <Dashboard data={data} />
     </div>
   );
 }

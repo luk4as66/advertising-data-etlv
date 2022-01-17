@@ -4,7 +4,7 @@ import _ from "lodash";
 import FilterForm from "../filterForm/filterForm";
 import Graph from "../graph/graph";
 import { DashboardType } from "./types";
-import { Campaign, CoreData, Datasource } from "../../utils/dataTypes";
+import { Campaign, CampaignRaw, Datasource } from "../../utils/dataTypes";
 
 function Dashboard({ data }: DashboardType): React.ReactElement {
   const [selectedDataSources, setSelectedDataSources] = useState<
@@ -14,29 +14,33 @@ function Dashboard({ data }: DashboardType): React.ReactElement {
     ReadonlyArray<Campaign>
   >([]);
 
-  const dataSources = useMemo(() => Object.keys(data), [data]);
+  const dataSources = useMemo(
+    () => _.chain(data).map("Datasource").uniq().value(),
+    [data]
+  );
 
-  const campaignsNames = useMemo(() => {
-    const campaigns: Array<Campaign> = [];
-
-    dataSources.forEach((dataSource) => {
-      campaigns.push(...Object.keys(data[dataSource]));
-    });
-
-    return _.uniq(campaigns);
-  }, [data, dataSources]);
+  const campaignsNames = useMemo(
+    () => _.chain(data).map("Campaign").uniq().value(),
+    [data]
+  );
 
   const selectedData = useMemo(() => {
-    const selected: Array<CoreData> = [];
+    const selected: Array<CampaignRaw> = [];
+    data.forEach((item) => {
+      const isOnSelectedSources = _.find(
+        selectedDataSources,
+        (datasource) => datasource === item.Datasource
+      );
+      const isOnSelectedCampaigns = _.find(
+        selectedCampaigns,
+        (campaign) => campaign === item.Campaign
+      );
 
-    selectedDataSources.forEach((dataSource) => {
-      const src = data[dataSource];
-      selectedCampaigns.forEach((cmp) => {
-        if (src[cmp]) {
-          selected.push(...src[cmp]);
-        }
-      });
+      if (isOnSelectedSources && isOnSelectedCampaigns) {
+        selected.push(item);
+      }
     });
+
     return selected;
   }, [selectedDataSources, selectedCampaigns]);
 

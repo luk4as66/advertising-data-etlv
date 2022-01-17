@@ -1,5 +1,5 @@
-import { CampaignByDatasource } from "../../utils/dataTypes";
+import { CampaignRaw } from "../../utils/dataTypes";
 
 export type DashboardType = {
-  data: CampaignByDatasource;
+  data: ReadonlyArray<CampaignRaw>;
 };
