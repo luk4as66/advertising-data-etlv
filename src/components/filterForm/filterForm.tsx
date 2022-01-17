@@ -22,7 +22,6 @@ function FilterForm({
   >([]);
 
   const availableCampaigns: ReadonlyArray<Campaign> = useMemo(() => {
-    // TODO: same function as is in dashboard;
     const campaigns: Array<Campaign> = [];
 
     selectedDataSources.forEach((dataSource) => {
