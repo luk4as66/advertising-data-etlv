@@ -14,7 +14,7 @@ import _ from "lodash";
 import moment from "moment";
 import { GraphType } from "./types";
 import { CoreData } from "../../utils/dataTypes";
-import { getGraphDataConfig, graphConfigOptions } from "./utils";
+import { deciamteData, getGraphDataConfig, graphConfigOptions } from "./utils";
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +32,9 @@ function Graph({ data }: GraphType): React.ReactElement {
     const clicks: Array<number> = [];
     const impressions: Array<number> = [];
 
-    const sortedData = _.sortBy(data, (a) =>
+    const getDataToSort = deciamteData(data);
+
+    const sortedData = _.sortBy(getDataToSort, (a) =>
       moment(a.Date, "DD.MM.YYYY").toDate().getTime()
     );
 

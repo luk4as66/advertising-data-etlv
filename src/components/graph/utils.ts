@@ -51,3 +51,21 @@ export const getGraphDataConfig = (
     },
   ],
 });
+
+export const deciamteData = <T>(data: ReadonlyArray<T>) => {
+  const decimatedData: Array<T> = [];
+  let increment = 0;
+  if (data.length >= 10000) {
+    increment = 300;
+  } else if (data.length >= 1000) {
+    increment = 100;
+  } else if (data.length >= 100) {
+    increment = 2;
+  }
+
+  for (let i = 0; i < data.length; i += increment) {
+    decimatedData.push(data[i]);
+  }
+
+  return decimatedData.length > 0 ? decimatedData : data;
+};
