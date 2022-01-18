@@ -13,13 +13,11 @@ function FilterForm({
   data,
   onApply,
 }: FilterFormType): React.ReactElement {
-  const [selectedDataSources, setSelectedDataSources] = useState<
-    ReadonlyArray<string>
-  >([]);
+  const [selectedDataSources, setSelectedDataSources] =
+    useState<ReadonlyArray<string>>(dataSources);
 
-  const [selectedCampaigns, setSelectedCampaigns] = useState<
-    ReadonlyArray<string>
-  >([]);
+  const [selectedCampaigns, setSelectedCampaigns] =
+    useState<ReadonlyArray<string>>(campaignsNames);
 
   const availableCampaigns: ReadonlyArray<Campaign> = useMemo(() => {
     const campaigns: Array<Campaign> = [];

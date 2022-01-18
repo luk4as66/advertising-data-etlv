@@ -5,51 +5,27 @@ import FilterForm from "../filterForm/filterForm";
 import Graph from "../graph/graph";
 import { DashboardType } from "./types";
 import { Campaign, CampaignRaw, Datasource } from "../../utils/dataTypes";
+import { getSelectedData } from "./utils";
 
 function Dashboard({ data }: DashboardType): React.ReactElement {
-  const [selectedDataSources, setSelectedDataSources] = useState<
-    ReadonlyArray<Datasource>
-  >([]);
-  const [selectedCampaigns, setSelectedCampaigns] = useState<
-    ReadonlyArray<Campaign>
-  >([]);
+  const [selectedData, setSelectedData] =
+    useState<ReadonlyArray<CampaignRaw>>(data);
 
   const dataSources = useMemo(
     () => _.chain(data).map("Datasource").uniq().value(),
     [data]
   );
 
-  const campaignsNames = useMemo(
+  const campaigns = useMemo(
     () => _.chain(data).map("Campaign").uniq().value(),
     [data]
   );
 
-  const selectedData = useMemo(() => {
-    const selected: Array<CampaignRaw> = [];
-    data.forEach((item) => {
-      const isOnSelectedSources = _.find(
-        selectedDataSources,
-        (datasource) => datasource === item.Datasource
-      );
-      const isOnSelectedCampaigns = _.find(
-        selectedCampaigns,
-        (campaign) => campaign === item.Campaign
-      );
-
-      if (isOnSelectedSources && isOnSelectedCampaigns) {
-        selected.push(item);
-      }
-    });
-
-    return selected;
-  }, [selectedDataSources, selectedCampaigns]);
-
   const handleOnApply = (
-    sources: ReadonlyArray<Datasource>,
-    campaigns: ReadonlyArray<Campaign>
+    sourcesNames: ReadonlyArray<Datasource>,
+    campaignsNames: ReadonlyArray<Campaign>
   ) => {
-    setSelectedDataSources(sources);
-    setSelectedCampaigns(campaigns);
+    setSelectedData(getSelectedData(campaignsNames, sourcesNames, data));
   };
 
   return (
@@ -57,7 +33,7 @@ function Dashboard({ data }: DashboardType): React.ReactElement {
       <Grid item container justifyContent="flex-start" xs={4}>
         <FilterForm
           dataSources={dataSources}
-          campaignsNames={campaignsNames}
+          campaignsNames={campaigns}
           data={data}
           onApply={handleOnApply}
         />
@@ -69,4 +45,4 @@ function Dashboard({ data }: DashboardType): React.ReactElement {
   );
 }
 
-export default Dashboard;
+export default React.memo(Dashboard);
