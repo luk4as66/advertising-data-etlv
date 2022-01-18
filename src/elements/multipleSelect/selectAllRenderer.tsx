@@ -7,16 +7,30 @@ function SelectAllRenderer({
   onAllSelectChange,
 }: SelectAllRendererType) {
   return (
-    <ListItem key="all-clear" disablePadding>
-      <ListItemButton>
-        <ListItemText
-          onClick={() => onAllSelectChange(!isAllSelected)}
-          style={{ width: 200 }}
-          primary={isAllSelected ? "Clear selection" : "All"}
-          primaryTypographyProps={{ noWrap: true }}
-        />
-      </ListItemButton>
-    </ListItem>
+    <>
+      {!isAllSelected && (
+        <ListItem key="all-clear" disablePadding>
+          <ListItemButton>
+            <ListItemText
+              onClick={() => onAllSelectChange(true)}
+              style={{ width: 200 }}
+              primary="All"
+              primaryTypographyProps={{ noWrap: true }}
+            />
+          </ListItemButton>
+        </ListItem>
+      )}
+      <ListItem key="all-clear" disablePadding>
+        <ListItemButton>
+          <ListItemText
+            onClick={() => onAllSelectChange(false)}
+            style={{ width: 200 }}
+            primary="Clear selection"
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItemButton>
+      </ListItem>
+    </>
   );
 }
 
