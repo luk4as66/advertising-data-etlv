@@ -39,7 +39,7 @@ function MultipleSelect({
 
   return (
     <div>
-      <FormControl fullWidth sx={{ p: 1 }}>
+      <FormControl fullWidth sx={{ paddingTop: 1 }}>
         <InputLabel id="select-label">{label}</InputLabel>
         <Select
           labelId="select-label"
