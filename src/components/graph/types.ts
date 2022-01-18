@@ -1,5 +1,11 @@
-import { CoreData } from "../../utils/dataTypes";
+import { CampaignRaw } from "../../utils/dataTypes";
 
 export type GraphType = {
-  data: ReadonlyArray<CoreData>;
+  data: ReadonlyArray<CampaignRaw>;
+};
+
+export type GraphDataConfigType = {
+  dates: Array<string>;
+  clicks: Array<number>;
+  impressions: Array<number>;
 };

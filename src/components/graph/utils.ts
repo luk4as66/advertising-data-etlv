@@ -1,3 +1,8 @@
+import _ from "lodash";
+import moment from "moment";
+import { CampaignRaw, CoreData } from "../../utils/dataTypes";
+import { GraphDataConfigType } from "./types";
+
 export const graphConfigOptions = {
   responsive: true,
   interaction: {
@@ -52,20 +57,46 @@ export const getGraphDataConfig = (
   ],
 });
 
-export const deciamteData = <T>(data: ReadonlyArray<T>) => {
+export const decimateData = <T>(data: ReadonlyArray<T>) => {
   const decimatedData: Array<T> = [];
   let increment = 0;
   if (data.length >= 10000) {
-    increment = 300;
+    increment = 200;
   } else if (data.length >= 1000) {
-    increment = 100;
+    increment = 30;
   } else if (data.length >= 100) {
     increment = 2;
   }
 
-  for (let i = 0; i < data.length; i += increment) {
-    decimatedData.push(data[i]);
+  if (increment > 0) {
+    for (let i = 0; i < data.length; i += increment) {
+      decimatedData.push(data[i]);
+    }
   }
 
   return decimatedData.length > 0 ? decimatedData : data;
+};
+
+export const getSortedData = (
+  data: ReadonlyArray<CampaignRaw>
+): GraphDataConfigType => {
+  const dates: Array<string> = [];
+  const clicks: Array<number> = [];
+  const impressions: Array<number> = [];
+
+  const sortedData = _.sortBy(data, (a) =>
+    moment(a.Date, "DD.MM.YYYY").toDate().getTime()
+  );
+
+  sortedData.forEach((coreData: CoreData) => {
+    dates.push(coreData.Date);
+    clicks.push(coreData.Clicks);
+    impressions.push(coreData.Impressions);
+  });
+
+  return {
+    dates,
+    clicks,
+    impressions,
+  };
 };
