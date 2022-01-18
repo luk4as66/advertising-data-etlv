@@ -38,38 +38,40 @@ function MultipleSelect({
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="select-label">{label}</InputLabel>
-      <Select
-        labelId="select-label"
-        multiple
-        value={selectedValue}
-        renderValue={(selected) => (
-          <SelectedValuesRenderer
-            isAllSelected={isAllSelected}
-            selected={selected}
-          />
-        )}
-      >
-        <SelectAllRenderer
-          isAllSelected={isAllSelected}
-          onAllSelectChange={handleOnAllSelectChange}
-        />
-        <List
-          height={200}
-          itemCount={selectData.length}
-          itemData={{
-            onRowClick,
-            items: selectData,
-            selected: selectedValue,
-          }}
-          itemSize={40}
-          width="100%"
+    <div>
+      <FormControl fullWidth sx={{ p: 1 }}>
+        <InputLabel id="select-label">{label}</InputLabel>
+        <Select
+          labelId="select-label"
+          multiple
+          value={selectedValue}
+          renderValue={(selected) => (
+            <SelectedValuesRenderer
+              isAllSelected={isAllSelected}
+              selected={selected}
+            />
+          )}
         >
-          {ListItemRenderer}
-        </List>
-      </Select>
-    </FormControl>
+          <SelectAllRenderer
+            isAllSelected={isAllSelected}
+            onAllSelectChange={handleOnAllSelectChange}
+          />
+          <List
+            height={200}
+            itemCount={selectData.length}
+            itemData={{
+              onRowClick,
+              items: selectData,
+              selected: selectedValue,
+            }}
+            itemSize={40}
+            width="100%"
+          >
+            {ListItemRenderer}
+          </List>
+        </Select>
+      </FormControl>
+    </div>
   );
 }
 
