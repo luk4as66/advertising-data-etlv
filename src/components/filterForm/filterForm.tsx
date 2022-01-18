@@ -2,10 +2,10 @@ import React, { useMemo, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { Box, Button } from "@mui/material";
-import _ from "lodash";
 import MultipleSelect from "../../elements/multipleSelect/multipleSelect";
 import { FilterFormType } from "./types";
 import { Campaign, Datasource } from "../../utils/dataTypes";
+import { getAvailableCampaigns, getAvailableDataSources } from "./utils";
 
 function FilterForm({
   campaignsNames,
@@ -19,37 +19,15 @@ function FilterForm({
   const [selectedCampaigns, setSelectedCampaigns] =
     useState<ReadonlyArray<string>>(campaignsNames);
 
-  const availableCampaigns: ReadonlyArray<Campaign> = useMemo(() => {
-    const campaigns: Array<Campaign> = [];
+  const availableCampaigns: ReadonlyArray<Campaign> = useMemo(
+    () => getAvailableCampaigns(selectedDataSources, data),
+    [selectedDataSources]
+  );
 
-    data.forEach((item) => {
-      const isOnSelectedDataSources = _.find(
-        selectedDataSources,
-        (selectedDatasource) => selectedDatasource === item.Datasource
-      );
-      if (isOnSelectedDataSources) {
-        campaigns.push(item.Campaign);
-      }
-    });
-
-    return _.uniq(campaigns);
-  }, [selectedDataSources]);
-
-  const availableDatasources: ReadonlyArray<Datasource> = useMemo(() => {
-    const sources: Array<Datasource> = [];
-
-    selectedCampaigns.forEach((campaign) => {
-      const datasource = _.find(
-        data,
-        (dataItem) => dataItem.Campaign === campaign
-      );
-      if (datasource) {
-        sources.push(datasource.Datasource);
-      }
-    });
-
-    return _.uniq(sources);
-  }, [selectedCampaigns]);
+  const availableDatasources: ReadonlyArray<Datasource> = useMemo(
+    () => getAvailableDataSources(campaignsNames, data),
+    [selectedCampaigns]
+  );
 
   const handleDataSourceChange = (selection: ReadonlyArray<string>): void => {
     setSelectedDataSources(selection);

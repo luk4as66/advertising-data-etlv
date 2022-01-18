@@ -21,7 +21,11 @@ function App() {
 
   return (
     <div className="App">
-      {isLoading ? <CircularProgress /> : <Dashboard data={data} />}
+      {isLoading ? (
+        <CircularProgress sx={{ padding: 3 }} />
+      ) : (
+        <Dashboard data={data} />
+      )}
     </div>
   );
 }
