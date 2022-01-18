@@ -9,7 +9,7 @@ function SelectAllRenderer({
   return (
     <>
       {!isAllSelected && (
-        <ListItem key="all-clear" disablePadding>
+        <ListItem key="all" disablePadding>
           <ListItemButton>
             <ListItemText
               onClick={() => onAllSelectChange(true)}
@@ -20,7 +20,7 @@ function SelectAllRenderer({
           </ListItemButton>
         </ListItem>
       )}
-      <ListItem key="all-clear" disablePadding>
+      <ListItem key="clear" disablePadding>
         <ListItemButton>
           <ListItemText
             onClick={() => onAllSelectChange(false)}

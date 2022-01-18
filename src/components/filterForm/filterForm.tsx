@@ -25,7 +25,7 @@ function FilterForm({
   );
 
   const availableDatasources: ReadonlyArray<Datasource> = useMemo(
-    () => getAvailableDataSources(campaignsNames, data),
+    () => getAvailableDataSources(selectedCampaigns, data),
     [selectedCampaigns]
   );
 
