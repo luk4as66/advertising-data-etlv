@@ -1,8 +1,22 @@
-# Getting Started with Create React App
+# advertising-data-etlv
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+In short purpouse of this project is to get csv data with marketing campaigns, parse it, allow user to filter data and display on chart.
+
+What im using except react and typescript? 
+1. To fetch and parse data : Papaparse https://www.papaparse.com
+2. To deal with UI: MUI https://mui.com
+3. To handle chart: react-chartjs-2 https://react-chartjs-2.netlify.app
+4. Misc: lodash https://lodash.com
+5. Tests: react-testing-library https://testing-library.com/docs/react-testing-library/intro/
+6. Mock api: http-request-mock https://github.com/huturen/http-request-mock
+7. Virtualisation: react-window https://react-window.vercel.app/#/examples/list/fixed-size
+
+
+
+## How to run?
 
 In the project directory, you can run:
 
