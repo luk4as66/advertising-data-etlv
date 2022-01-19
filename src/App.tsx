@@ -8,6 +8,7 @@ import { CampaignRaw } from "./utils/dataTypes";
 
 function App() {
   const [data, setData] = useState<ReadonlyArray<CampaignRaw>>([]);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleOnComplete = (allData: ReadonlyArray<CampaignRaw>) => {
@@ -15,8 +16,13 @@ function App() {
     setIsLoading(false);
   };
 
+  const handleOnError = (errorMsg: string) => {
+    setErrorMessage(errorMsg);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    fetchData(ADVERTISING_DATA_URL, handleOnComplete);
+    fetchData(ADVERTISING_DATA_URL, handleOnComplete, handleOnError);
   }, []);
 
   return (
@@ -24,7 +30,7 @@ function App() {
       {isLoading ? (
         <CircularProgress sx={{ padding: 3 }} />
       ) : (
-        <Dashboard data={data} />
+        errorMessage || <Dashboard data={data} />
       )}
     </div>
   );
