@@ -11,9 +11,3 @@ export type CampaignRaw = {
   Campaign: Campaign;
   Datasource: Datasource;
 } & CoreData;
-
-export type CampaignByDatasource = {
-  [key: Datasource]: {
-    [key: Campaign]: Array<CoreData>;
-  };
-};
