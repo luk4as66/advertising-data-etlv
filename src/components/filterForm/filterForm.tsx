@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { Box, Button } from "@mui/material";
+import _ from "lodash";
 import MultipleSelect from "../../elements/multipleSelect/multipleSelect";
 import { FilterFormType } from "./types";
 import { Campaign, Datasource } from "../../utils/dataTypes";
@@ -21,12 +22,12 @@ function FilterForm({
 
   const availableCampaigns: ReadonlyArray<Campaign> = useMemo(
     () => getAvailableCampaigns(selectedDataSources, data),
-    [selectedDataSources]
+    [selectedDataSources, data]
   );
 
   const availableDatasources: ReadonlyArray<Datasource> = useMemo(
     () => getAvailableDataSources(selectedCampaigns, data),
-    [selectedCampaigns]
+    [selectedCampaigns, data]
   );
 
   const handleDataSourceChange = (selection: ReadonlyArray<string>): void => {
@@ -37,7 +38,7 @@ function FilterForm({
     setSelectedCampaigns(selection);
   };
 
-  const handleOnApply = () => {
+  const handleOnApply = useCallback(() => {
     const campaigns =
       selectedCampaigns.length > availableCampaigns.length
         ? availableCampaigns
@@ -49,7 +50,13 @@ function FilterForm({
         : selectedDataSources;
 
     onApply(datasources, campaigns);
-  };
+  }, [
+    selectedCampaigns,
+    availableCampaigns,
+    selectedDataSources,
+    availableDatasources,
+    onApply,
+  ]);
 
   return (
     <Box width="inherit">
@@ -60,18 +67,29 @@ function FilterForm({
         <MultipleSelect
           testId="datasource-select"
           label="Datasource"
-          selectData={availableDatasources}
+          selectData={
+            selectedCampaigns.length > 0 ? availableDatasources : dataSources
+          }
           selectedValue={selectedDataSources}
           onSelectionChange={handleDataSourceChange}
         />
         <MultipleSelect
           testId="campaigns-select"
           label="Campaigns"
-          selectData={availableCampaigns}
+          selectData={
+            selectedDataSources.length > 0 ? availableCampaigns : campaignsNames
+          }
           selectedValue={selectedCampaigns}
           onSelectionChange={handleCampaignsChange}
         />
-        <Button variant="contained" onClick={handleOnApply} data-testid="apply">
+        <Button
+          variant="contained"
+          onClick={handleOnApply}
+          data-testid="apply"
+          disabled={
+            _.isEmpty(selectedDataSources) || _.isEmpty(selectedCampaigns)
+          }
+        >
           Apply
         </Button>
       </Stack>
@@ -79,4 +97,4 @@ function FilterForm({
   );
 }
 
-export default FilterForm;
+export default React.memo(FilterForm);

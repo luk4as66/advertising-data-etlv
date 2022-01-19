@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Grid from "@mui/material/Grid";
 import _ from "lodash";
 import FilterForm from "../filterForm/filterForm";
@@ -21,12 +21,15 @@ function Dashboard({ data }: DashboardType): React.ReactElement {
     [data]
   );
 
-  const handleOnApply = (
-    sourcesNames: ReadonlyArray<Datasource>,
-    campaignsNames: ReadonlyArray<Campaign>
-  ) => {
-    setSelectedData(getSelectedData(campaignsNames, sourcesNames, data));
-  };
+  const handleOnApply = useCallback(
+    (
+      sourcesNames: ReadonlyArray<Datasource>,
+      campaignsNames: ReadonlyArray<Campaign>
+    ) => {
+      setSelectedData(getSelectedData(campaignsNames, sourcesNames, data));
+    },
+    [data]
+  );
 
   return (
     <Grid container spacing={2}>

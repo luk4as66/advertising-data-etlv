@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormControl, InputLabel, Select } from "@mui/material";
 import { FixedSizeList as List } from "react-window";
 import _ from "lodash";
@@ -19,24 +19,31 @@ function MultipleSelect({
     allSelected(selectedValue, selectData)
   );
 
-  const onRowClick = (rowText: string, isSelected: boolean): void => {
-    let selection: ReadonlyArray<string>;
-    if (isSelected) {
-      selection = _.filter(selectedValue, (item) => item !== rowText);
-    } else {
-      selection = [...selectedValue, rowText];
-    }
-    onSelectionChange(selection);
-  };
+  const onRowClick = useCallback(
+    (rowText: string, isSelected: boolean): void => {
+      let selection: ReadonlyArray<string>;
+      if (isSelected) {
+        selection = _.filter(selectedValue, (item) => item !== rowText);
+        setIsAllSelected(false);
+      } else {
+        selection = [...selectedValue, rowText];
+      }
+      onSelectionChange(selection);
+    },
+    [onSelectionChange]
+  );
 
-  const handleOnAllSelectChange = (isAll: boolean) => {
-    if (isAll) {
-      onSelectionChange(selectData);
-    } else {
-      onSelectionChange([]);
-    }
-    setIsAllSelected(isAll);
-  };
+  const handleOnAllSelectChange = useCallback(
+    (isAll: boolean) => {
+      if (isAll) {
+        onSelectionChange(selectData);
+      } else {
+        onSelectionChange([]);
+      }
+      setIsAllSelected(isAll);
+    },
+    [onSelectionChange, selectData]
+  );
 
   return (
     <div data-testid={testId}>

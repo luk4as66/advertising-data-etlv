@@ -11,6 +11,7 @@ export type MultipleSelectType = Readonly<{
 export type SelectedValuesRendererType = Readonly<{
   isAllSelected: boolean;
   selected: ReadonlyArray<string>;
+  chipLimit?: number;
 }>;
 
 export type ListItemRendererType = Readonly<{
