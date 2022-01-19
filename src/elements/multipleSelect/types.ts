@@ -5,6 +5,7 @@ export type MultipleSelectType = Readonly<{
   selectData: ReadonlyArray<string>;
   selectedValue: ReadonlyArray<string>;
   onSelectionChange: (selection: ReadonlyArray<string>) => void;
+  testId?: string;
 }>;
 
 export type SelectedValuesRendererType = Readonly<{

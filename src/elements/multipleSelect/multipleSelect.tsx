@@ -13,6 +13,7 @@ function MultipleSelect({
   selectData,
   selectedValue,
   onSelectionChange,
+  testId,
 }: MultipleSelectType): React.ReactElement {
   const [isAllSelected, setIsAllSelected] = useState<boolean>(
     allSelected(selectedValue, selectData)
@@ -38,7 +39,7 @@ function MultipleSelect({
   };
 
   return (
-    <div>
+    <div data-testid={testId}>
       <FormControl fullWidth sx={{ paddingTop: 1 }}>
         <InputLabel id="select-label">{label}</InputLabel>
         <Select

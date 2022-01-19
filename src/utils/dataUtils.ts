@@ -2,7 +2,7 @@ import Papa from "papaparse";
 import { CampaignRaw } from "./dataTypes";
 
 // TODO: Improve validation
-const isValidUrl = (url: string) => {
+export const isValidUrl = (url: string) => {
   try {
     // eslint-disable-next-line no-new
     new URL(url);

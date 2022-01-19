@@ -48,22 +48,24 @@ function FilterForm({
       </Typography>
       <Stack spacing={2} p={2}>
         <MultipleSelect
+          testId="datasource-select"
           label="Datasource"
           selectData={
-            selectedCampaigns.length > 0 ? availableDatasources : dataSources
+            selectedCampaigns.length > 0 ? availableDatasources : dataSources // to cover
           }
           selectedValue={selectedDataSources}
           onSelectionChange={handleDataSourceChange}
         />
         <MultipleSelect
+          testId="campaigns-select"
           label="Campaigns"
           selectData={
-            selectedDataSources.length > 0 ? availableCampaigns : campaignsNames
+            selectedDataSources.length > 0 ? availableCampaigns : campaignsNames // to cover
           }
           selectedValue={selectedCampaigns}
           onSelectionChange={handleCampaignsChange}
         />
-        <Button variant="contained" onClick={handleOnApply}>
+        <Button variant="contained" onClick={handleOnApply} data-testid="apply">
           Apply
         </Button>
       </Stack>
