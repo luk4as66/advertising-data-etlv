@@ -38,7 +38,17 @@ function FilterForm({
   };
 
   const handleOnApply = () => {
-    onApply(selectedDataSources, selectedCampaigns);
+    const campaigns =
+      selectedCampaigns.length > availableCampaigns.length
+        ? availableCampaigns
+        : selectedCampaigns;
+
+    const datasources =
+      selectedDataSources.length > availableDatasources.length
+        ? availableDatasources
+        : selectedDataSources;
+
+    onApply(datasources, campaigns);
   };
 
   return (
@@ -50,18 +60,14 @@ function FilterForm({
         <MultipleSelect
           testId="datasource-select"
           label="Datasource"
-          selectData={
-            selectedCampaigns.length > 0 ? availableDatasources : dataSources // to cover
-          }
+          selectData={availableDatasources}
           selectedValue={selectedDataSources}
           onSelectionChange={handleDataSourceChange}
         />
         <MultipleSelect
           testId="campaigns-select"
           label="Campaigns"
-          selectData={
-            selectedDataSources.length > 0 ? availableCampaigns : campaignsNames // to cover
-          }
+          selectData={availableCampaigns}
           selectedValue={selectedCampaigns}
           onSelectionChange={handleCampaignsChange}
         />
