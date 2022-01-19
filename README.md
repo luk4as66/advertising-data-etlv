@@ -28,7 +28,7 @@ In short purpouse of this project is to get csv data with marketing campaigns, p
   ...
 }
 ```
-to reduce data duplicaiton and improve performance but code was to complicated and hard to read, performacne gain was not worth of it.
+to reduce data duplicaiton and improve performance but code was too complicated and hard to read, performacne gain was not worth of it.
 
 2. In `multipleSelect.tsx` to deal with huge amount of data in dropdown I've decided to use virtualisation.
 
