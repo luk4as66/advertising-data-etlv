@@ -93,7 +93,7 @@ describe("FilterForm", () => {
 
     expect(mockOnApply).toBeCalledWith(
       ["source2", "source1"],
-      ["campaign3", "campaign2", "campaign4", "campaign1"]
+      ["campaign1", "campaign2"]
     );
   });
 
