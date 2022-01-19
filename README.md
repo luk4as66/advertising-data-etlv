@@ -41,6 +41,9 @@ to reduce data duplicaiton and improve performance but code was to complicated a
 
 ## How to run?
 
+Developed and tested with: 
+### `Node v17.1.0 and Npm 8.1.3` 
+
 In the project directory, you can run:
 
 ### `npm start`
