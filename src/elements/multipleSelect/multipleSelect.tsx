@@ -83,4 +83,4 @@ function MultipleSelect({
   );
 }
 
-export default MultipleSelect;
+export default React.memo(MultipleSelect);
