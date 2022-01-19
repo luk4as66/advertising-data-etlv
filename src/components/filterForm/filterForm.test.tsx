@@ -1,5 +1,11 @@
 import React from "react";
-import { render, screen, fireEvent, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  within,
+  waitFor,
+} from "@testing-library/react";
 import FilterForm from "./filterForm";
 import { CampaignRaw } from "../../utils/dataTypes";
 
@@ -107,8 +113,8 @@ describe("FilterForm", () => {
       />
     );
 
-    const datasourceSelect = within(screen.getByTestId("campaigns-select"));
-    fireEvent.mouseDown(datasourceSelect.getByRole("button"));
+    const campaignSelect = within(screen.getByTestId("campaigns-select"));
+    fireEvent.mouseDown(campaignSelect.getByRole("button"));
     await screen.getByRole("listbox");
     fireEvent.click(screen.getByText("campaign3"));
 

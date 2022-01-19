@@ -107,4 +107,18 @@ describe("MultipleSelect", () => {
 
     expect(onSelectionChangeMock).toBeCalledWith([]);
   });
+
+  test("should show more", async () => {
+    const moreSelected = selectData.concat(["Four", "Five", "Six"]);
+    render(
+      <MultipleSelect
+        onSelectionChange={onSelectionChangeMock}
+        selectData={selectData}
+        label="Multiple Select"
+        selectedValue={moreSelected}
+      />
+    );
+
+    expect(screen.getByText("and 1 more")).toBeInTheDocument();
+  });
 });
