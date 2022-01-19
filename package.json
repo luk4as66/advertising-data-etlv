@@ -2,6 +2,7 @@
   "name": "advertising-data-etlv",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://adverity-challenge.s3-website-eu-west-1.amazonaws.com",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
